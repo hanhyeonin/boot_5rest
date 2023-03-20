@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="org.iclass.rest.dao.MemberMapper">
+ 	<insert id="insert" parameterType="NewMember" >
+ 		INSERT INTO new_member 
+		VALUES (#{id},#{name},#{password},#{email},
+					#{age,jdbcType=NUMERIC},
+					#{gender,jdbcType=CHAR},
+					#{hobbies,jdbcType=VARCHAR},
+					sysdate,
+					#{address,jdbcType=VARCHAR})
+ 	</insert> 
+ 	<!-- ALTER TABLE NEW_MEMBER ADD ADDRESS VARCHAR2(100); (컬럼추가)--> 
+ 	<!-- null 허용한 컬럼은 타입을 알려주어 NULL 이 입력되도록 한다. -->
+ 	
+ 	<update id="update" parameterType="NewMember">
+	 	UPDATE new_member
+		SET email=#{email}, age=#{age}, address=#{address}, hobbies=#{hobbies} 
+		WHERE id=#{id}
+ 	</update>
+ 	
+ 	<delete id="delete" parameterType="String">
+ 		DELETE FROM new_member 
+ 		WHERE id=#{id}
+ 	</delete>
+ 	
+ 	
+ 	<!-- select 실행결과를 자동으로 NewMember 객체를 생성해서 매핑을 합니다. -->
+ 	<select id="selectOne" parameterType="String" resultType="NewMember">
+ 		SELECT * FROM new_member WHERE id=#{id}   <!-- PK로 조회 -->
+ 	</select>
+ 	<!-- select 실행결과가 여러행이 되는 List인 경우에는 <T>에 해당하는 제너릭타입을 설정합니다. 
+ 		 select 조회 컬럼과 NewMember 자바 객체의 필드를 매핑합니다.
+ 	-->
+ 	<select id="selectAll" resultType="NewMember">
+ 		SELECT * FROM new_member
+ 	</select>	
+
+ 	<!-- *로그인 테스트. -->
+ 	<select id="login" parameterType="java.util.Map" 
+ 				resultType="NewMember">  
+ 	<!-- key 이름 :"id","password" 2개를 저장한 Map -->
+ 		SELECT * FROM new_member  
+ 		WHERE id=#{id} and password=#{password}
+ 	</select>
+ 	
+ 	<!-- 여기까지 dao 구현해보세요. -->
+ 	
+ 	<!-- 테스트 검색 -->
+ 	<select id="searchName" parameterType="String" resultType="NewMember">
+ 		SELECT * FROM new_member 
+ 		WHERE name like '%'||#{find}||'%'
+ 	</select>
+ 	<!-- 동적쿼리 검색 -->
+ 	<select id="search" parameterType="java.util.Map" resultType="NewMember">
+ 		SELECT * FROM new_member   <!-- 아래 if 가 참인 것은 1개입니다. 참인 경우의 Where 를 추가 -->
+	 	<if test="column=='id'">
+	 		WHERE id like '%'||#{find}||'%'   <!-- || 는 문자열 연결연산 -->
+	 	</if>
+	 	<if test="column=='email'">
+	 		WHERE email like '%'||#{find}||'%'
+	 	</if>
+	 	<if test="column=='name'">
+	 		WHERE name like '%'||#{find}||'%'
+	 	</if>
+	 	<if test="column=='hobbies'">
+	 		WHERE hobbies=#{find}
+	 	</if>
+ 	</select>  <!-- Map 에 저장된 key 이름은 ? "find" , "column"
+ 					column 키의 값은 테이블의 컬럼명으로 하거나 규칙을 정해서 할수 있습니다.
+ 				-->
+ 	
+ </mapper>
+ 
+ 
+ 
+ 
+ 
+ 
