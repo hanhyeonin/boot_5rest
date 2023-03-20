@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>19. 카카오 검색 API 테스트</title>
+</head>
+<body>
+ <p style="margin: 10px">
+        <label for="query">검색어 : </label> <input type="text" id="query" placeholder="검색어를 입력하세요.">
+        <label for="size">size : </label> <input type="number" id="size" value="10" max="50" min="1" 
+        placeholder="페이지 크기(리스트 갯수)">
+        <label for="page">page : </label> <input type="number" id="page" value="1" max="50" min="1"
+        placeholder="페이지 번호">
+        <input type="radio" id="accuracy"  name="sort" ><label for="accuracy">정확도순 </label> 
+        <input type="radio" id="recency" name="sort" checked> <!-- checked="checked" 에서 생략된 형식 -->
+        <label for="recency">최신순 </label> 
+        <button id="search" style="padding: 4px 7px ;margin-left:10px">검색</button>
+    </p>
+    <hr>
+    <p id="count"></p>
+    <h4>검색 결과</h4>
+    <p id="list"></p>
+    <script type="text/javascript" src="/js/19search.js"></script>
+</body>
+</html>
