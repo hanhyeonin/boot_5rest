@@ -22,7 +22,7 @@ public class NewMember {
 	private String id;
 	private String name;
 	
-	@JsonIgnore
+//	@JsonIgnore		// insert 사용을 위해 주석처리
 	private String password;
 	
 	private String email;

@@ -14,7 +14,10 @@
 <div style="width:650px;">
 <!-- input과 button : form 태그(동기식 통신) 없음. 각 입력값에 대한 type은 나중에 보완 -->
 <!-- input 태그를 가져가는 document 사용을 위해 id값 줘야함. -->
-	<input id="id" placeholder="아이디 ID">-아이디를 입력하고 조회할 수 있습니다.<br>
+	<input id="id" placeholder="아이디 ID"> 중복여부 : 
+	<label id="idOk"></label><!-- 아이디 실시간 중복검사 --><br>
+	
+	
 	<input id="name" placeholder="이름 name"><br>
 	<input type="password" id="password" placeholder="패스워드 pw"><br>
 	<input type="email" id="email" placeholder="이메일 email"><br>
@@ -22,10 +25,12 @@
 	<input id="hobbies" placeholder="취미"><br>
 	
 	<!-- checkbox 는 value값을 줘야 값을 가져감. -->
+	<div id="hobby">
 	<input type="checkbox" class="hobby" value="축구" id="football"><label for="football">축구</label>
 	<input type="checkbox" class="hobby" value="야구" id="baseball"><label for="baseball">야구</label>
 	<input type="checkbox" class="hobby" value="달리기" id="running"><label for="running">달리기</label>
 	<input type="checkbox" class="hobby" value="수영" id="swimming"><label for="swimming">수영</label>
+	</div>
 </div>
 <hr>
 <button id="getAll">전체조회 : GET </button>
@@ -51,6 +56,7 @@
 
 
 </main>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript" src="/js/admin.js"></script>
 </body>
 </html>

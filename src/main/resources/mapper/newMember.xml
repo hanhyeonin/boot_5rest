@@ -37,6 +37,16 @@
  	<select id="selectAll" resultType="NewMember">
  		SELECT * FROM new_member
  	</select>	
+ 	
+ 	<!-- id 중복검사 -->
+ 	<select id="idCheck" parameterType="String" resultType="int">
+ 		select count(*) from new_member
+ 		where id=#{id}
+ 	</select>
+ 	<select id="valid" parameterType="java.util.Map" resultType="int">
+ 		select count(*) from new_member
+ 		where #{column}=#{value}
+ 	</select>
 
  	<!-- *로그인 테스트. -->
  	<select id="login" parameterType="java.util.Map" 

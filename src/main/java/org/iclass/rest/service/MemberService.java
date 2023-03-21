@@ -33,12 +33,20 @@ public class MemberService {
 		return dao.selectAll();
 	}
 
-	public void insert(NewMember vo) {
+	public int insert(NewMember vo) {
 		// db 저장
-		dao.insert(vo);
+		return dao.insert(vo);
 	}
 	
 	public int update(NewMember vo) {
 		return dao.update(vo);
+	}
+	
+	public int idCheck(String id) {
+		return dao.idCheck(id);
+	}
+	
+	public int valid(Map<String, Object> map) {
+		return dao.valid(map);
 	}
 }

@@ -11,6 +11,8 @@ public interface MemberMapper {
 	int insert(NewMember member);
 	int update(NewMember member);
 	int delete(String id);
+	int idCheck(String id);
+	int valid(Map<String, Object> map);
 	NewMember selectOne(String id);
 	List<NewMember> selectAll();
 	NewMember login(Map<String,String> map);
