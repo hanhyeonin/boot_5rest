@@ -35,7 +35,8 @@
  		 select 조회 컬럼과 NewMember 자바 객체의 필드를 매핑합니다.
  	-->
  	<select id="selectAll" resultType="NewMember">
- 		SELECT * FROM new_member
+ 		SELECT * FROM new_member 
+ 		order by joinDate desc
  	</select>	
  	
  	<!-- id 중복검사 -->

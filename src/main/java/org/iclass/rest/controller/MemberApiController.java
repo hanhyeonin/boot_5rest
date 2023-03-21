@@ -1,7 +1,8 @@
 package org.iclass.rest.controller;
 
-import java.lang.ProcessHandle.Info;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.iclass.rest.dto.NewMember;
@@ -13,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.extern.slf4j.Slf4j;
@@ -30,8 +30,10 @@ public class MemberApiController {
 	}
 	
 	@GetMapping("/api/members")
-	public String members() {
-		return "members get";
+	public String members(NewMember member) throws JsonProcessingException {
+		List<NewMember> list = service.selectAll();
+		
+		return objMapper.writeValueAsString(list);
 	}
 	
 	@GetMapping("/api/member/{id}")		// 특정데이터를 입력할 때
@@ -72,7 +74,7 @@ public class MemberApiController {
 	}
 	
 	@GetMapping("/api/valid/{id}")	// 나중에 확인해보기
-	public String valid(@PathVariable String column, @PathVariable String value) throws JsonProcessingException {
+	public String valid(String column, @PathVariable String value) throws JsonProcessingException {
 		Map<String, Object> title = new HashMap<>();
 		title.put("column", "id");
 		title.put("value", value);

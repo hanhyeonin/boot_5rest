@@ -3,7 +3,12 @@ package org.iclass.rest.dto;
 
 import java.time.LocalDateTime;
 
+import org.iclass.rest.config.LocalDateTimeDeSerializer;
+import org.iclass.rest.config.LocalDateTimeSerializer;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -36,6 +41,8 @@ public class NewMember {
 	// 기본생성자가 없으면 AllArgsConstructor 할때, 컬럼순서와 변수선언순서가 일치해야한다.
 	// 이럴 때 String[] hoddy 이런 변수사용은 오류를 만든다.
 	
+	@JsonDeserialize(using = LocalDateTimeDeSerializer.class)
+	@JsonSerialize(using = LocalDateTimeSerializer.class)
 	private LocalDateTime joinDate;		// 커스텀으로 LocalDateTime 타입 직렬 또는 역직렬 패턴 설정
 	private String address;
 	
