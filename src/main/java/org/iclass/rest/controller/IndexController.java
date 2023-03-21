@@ -10,4 +10,9 @@ public class IndexController {
 	public String index() {
 		return "index";			// index.html
 	}
+	
+	@GetMapping("/admin")
+	public void admin() {
+		// 리턴이 없으면 요청 url 과 동일한 html 파일명이 view 파일.
+	}
 }

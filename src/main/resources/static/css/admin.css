@@ -1,0 +1,20 @@
+@charset "UTF-8";
+hr>td:nth-child(1){width:15%;}/* hr밑 td 자식 1번째 */
+hr>td:nth-child(2){width:20%;}
+hr>td:nth-child(3){width:25%;}
+hr>td:nth-child(4){width:15%;}
+hr>td:nth-child(5){width:25%;}
+input[type=text], input[type=password]{width:65%;padding: 3px;margin: 5px;}
+th,td{
+	border-top:1px solid gray;
+	border-bottom: 1px solid gray;
+	padding: 5px 10px; /* 테이블의 넓이 */
+}
+th {
+	background-color: teal; color:white;
+}
+tr:hover {
+	background-color: darkseagreen;
+	color: white;
+	cursor: pointer; /* 커서모양 */
+}

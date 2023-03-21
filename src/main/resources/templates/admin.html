@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>관리자 : 회원관리</title>
+<link href="/css/admin.css" rel="stylesheet">
+</head>
+<body>
+<main class="container">
+<!-- 부트스트랩은 메인에 컨테이너라고 클래스를 선언한다. -->
+<hr>
+<h3>비동기 통신을 이용한 회원관리</h3>
+<hr>
+<div style="width:650px;">
+<!-- input과 button : form 태그(동기식 통신) 없음. 각 입력값에 대한 type은 나중에 보완 -->
+<!-- input 태그를 가져가는 document 사용을 위해 id값 줘야함. -->
+	<input id="id" placeholder="아이디 ID">-아이디를 입력하고 조회할 수 있습니다.<br>
+	<input id="name" placeholder="이름 name"><br>
+	<input type="password" id="password" placeholder="패스워드 pw"><br>
+	<input type="email" id="email" placeholder="이메일 email"><br>
+	<input type="number" id="age" placeholder="나이 age"><br>
+	<input id="hobbies" placeholder="취미"><br>
+	
+	<!-- checkbox 는 value값을 줘야 값을 가져감. -->
+	<input type="checkbox" class="hobby" value="축구" id="football"><label for="football">축구</label>
+	<input type="checkbox" class="hobby" value="야구" id="baseball"><label for="baseball">야구</label>
+	<input type="checkbox" class="hobby" value="달리기" id="running"><label for="running">달리기</label>
+	<input type="checkbox" class="hobby" value="수영" id="swimming"><label for="swimming">수영</label>
+</div>
+<hr>
+<button id="getAll">전체조회 : GET </button>
+<button id="getOne">아이디로 조회 : GET </button>
+<button id="save">회원 등록 : POST </button>
+<button id="update">회원정보 수정 : PUT </button>
+<button id="delete">회원정보 삭제 : DELETE </button>
+<button id="clear">clear</button>
+<hr>
+	<p id="json">여기에 받은 데이터 json 문자열 표시합니다.</p>
+<hr>
+<table id="list" style="width:800px; border-collapse: collapse;"><!-- 전체조회 데이터를 표에 알맞게 넣어줍니다. -->
+	<thead><!-- 테이블 제목 -->
+		<tr>
+			<th>번호</th><th>이름</th><th>이메일</th><th>나이</th><th>취미</th>
+		</tr>
+	</thead>
+	<tbody>
+		
+	</tbody>
+</table>
+
+
+
+</main>
+<script type="text/javascript" src="/js/admin.js"></script>
+</body>
+</html>
