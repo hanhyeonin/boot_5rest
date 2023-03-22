@@ -1,6 +1,8 @@
 /**
 	admin.html 
  */
+
+// checkbox 선택으로 문자열 만들어주는 함수
 document.querySelector('#hobby').addEventListener('click', function() {
 	let hobbies = String();
 	document.querySelectorAll('.hobby').forEach(item => {
@@ -36,6 +38,7 @@ document.querySelector('#id').addEventListener('keyup', function() {
 	}
 })
 
+// input 요소 초기화
 const clear = function() {
 	document.querySelector('#id').value = ''
 	document.querySelector('#name').value = ''
@@ -56,6 +59,7 @@ const jsonStr = document.querySelector('#json')
 
 // json 응답을 그대로 보여줄 p태그
 
+// 전체 리스트 값 가져오기
 document.querySelector('#getAll').addEventListener('click', function() {
 	const xhr = new XMLHttpRequest();		// 비동기 통신 객체
 	xhr.open('GET', '/api/members')			// 전송 보낼 준비 : 메소드 방식과 url 설정
@@ -71,8 +75,9 @@ document.querySelector('#getAll').addEventListener('click', function() {
 	}
 })
 
+// 전체 리스트 값 테이블 생성하는 함수
 function makeList(list) {		// 객체의 배열
-	console.log(list);
+
 	//응답받은 data (배열)로 반복실행 Array.from(list)
 	document.querySelector('tbody').innerHTML = ''			// 초기화
 	list.forEach(member => {    							//배열에서 하나 가져온 member
@@ -88,14 +93,40 @@ function makeList(list) {		// 객체의 배열
 	});
 }
 
+// 아이디로 조회
 document.querySelector('#getOne').addEventListener('click', function() {
+	// id값 필수 입력해야합니다.
 	const id = document.querySelector('#id').value
+
+	if (id == '') {
+		alert('아이디 입력해야해.')
+		return;
+	}
+
 	const xhr = new XMLHttpRequest();
 	xhr.open('GET', '/api/member/' + id)
 	xhr.send()
 	xhr.onload = function() {
 		if (xhr.status == 200 || xhr.status === 201) {
 			jsonStr.innerHTML = xhr.response
+			const jsonObj = JSON.parse(xhr.response)
+			const isOk = jsonObj.isOk
+			// 변환된 자바스크립트 객체로 input 에 값 출력시키기.
+			if (isOk == 'fail') {
+				alert('조회된 회원이 없습니다.!')
+			} else if (isOk == 'success') {
+				const member = jsonObj.member
+				document.getElementById('name').value = member.name;
+				document.getElementById('email').value = member.email;
+				document.getElementById('age').value = member.age;
+				document.getElementById('hobbies').value = member.hobbies;
+				document.querySelectorAll('.hobby').forEach(item => {
+					//customer.hobby 에 있는 텍스트가 체크박스 요소의 value 를 포함하고 있는지 각각 비교함.
+					if (member.hobbies.includes(item.value)) item.checked = true;
+					else item.checked = false;
+				});
+			}
+
 		} else {
 			console.error('오류', xhr.status)
 		}
@@ -135,8 +166,59 @@ document.querySelector('#save').addEventListener('click', function() {
 	xhr.onload = function() {
 		if (xhr.status == 200 || xhr.status === 201) {
 			jsonStr.innerHTML = xhr.response
+			clear()			// 정상 등록 후 입력 요소 초기화
 		} else {
 			console.error('오류', xhr.status)
 		}
 	}
 })
+
+
+// 회원정보 수정
+document.querySelector('#update').addEventListener('click', function() {
+	const id = document.querySelector('#id').value
+	const email = document.querySelector('#email').value
+	const age = document.querySelector('#age').value
+	const hobbies = document.querySelector('#hobbies').value
+	
+	// java script 객체
+	const jObj = {
+		"id": id,
+		"email": email,
+		"age": age,
+		"hobbies": hobbies
+	}
+	const xhr = new XMLHttpRequest()
+	xhr.open('PUT', '/api/member/'+id)		// 조회 할 아이디
+	xhr.setRequestHeader('content-type', 'application/json; charset=utf-8')		// body 에 형식을 갖는 header
+
+	const data 	= JSON.stringify(jObj)			// 자바 객체를 문자열로 직렬화한 것.
+	xhr.send(data)
+	xhr.onload = function() {
+		if (xhr.status == 200 || xhr.status === 201) {
+			jsonStr.innerHTML = xhr.response
+			
+		} else {
+			console.error('오류', xhr.status)
+		}
+	}
+})
+
+// 회원정보 삭제
+document.querySelector('#delete').addEventListener('click',function(){
+	const id = document.querySelector('#id').value
+	const xhr = new XMLHttpRequest()
+	xhr.open('DELETE', '/api/member/'+id)		// 조회 할 아이디
+	xhr.send()
+	xhr.onload = function() {
+		if (xhr.status == 200 || xhr.status === 201) {
+			jsonStr.innerHTML = xhr.response
+		} else {
+			console.error('오류', xhr.status)
+		}
+	}
+})
+
+
+
+

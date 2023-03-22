@@ -49,4 +49,8 @@ public class MemberService {
 	public int valid(Map<String, Object> map) {
 		return dao.valid(map);
 	}
+	
+	public int delete(String id) {
+		return dao.delete(id);
+	}
 }

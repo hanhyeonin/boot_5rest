@@ -17,7 +17,8 @@
  	
  	<update id="update" parameterType="NewMember">
 	 	UPDATE new_member
-		SET email=#{email}, age=#{age}, address=#{address}, hobbies=#{hobbies} 
+		<!-- SET email=#{email}, age=#{age}, address=#{address}, hobbies=#{hobbies} --> 
+		SET email=#{email}, age=#{age}, hobbies=#{hobbies} 
 		WHERE id=#{id}
  	</update>
  	

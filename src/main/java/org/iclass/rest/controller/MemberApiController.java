@@ -1,15 +1,17 @@
 package org.iclass.rest.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.iclass.rest.dto.NewMember;
 import org.iclass.rest.service.MemberService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -37,8 +39,16 @@ public class MemberApiController {
 	}
 	
 	@GetMapping("/api/member/{id}")		// 특정데이터를 입력할 때
-	public String member(@PathVariable String id) {
-		return "members get : " + id;
+	public String member(@PathVariable String id) throws JsonProcessingException {
+		NewMember vo = service.member(id);
+		Map<String, Object> result = new HashMap<>();
+		String isOk = "fail";
+		if(vo != null) {				// 검색 결과가 없을 때
+			isOk = "success";			// 성공여부
+			result.put("member", vo);	// 담아온 vo 값 전달하기 위해 확인용
+		}
+		result.put("isOk", isOk);		// vo값이 있으면 success, 없으면 fail 로 전달
+		return objMapper.writeValueAsString(result);
 	}
 	
 	@PostMapping("/api/member")
@@ -85,5 +95,24 @@ public class MemberApiController {
 		return objMapper.writeValueAsString(result);
 	}
 	
+	@PutMapping("/api/member/{id}")				// JSON.stringify() , xhr.send() 를 사용하기위해 @RequestBody
+	public String update(@PathVariable String id, @RequestBody String member) throws JsonProcessingException {
+		
+		NewMember vo = objMapper.readValue(member, NewMember.class);
+		int count = service.update(vo);
+		Map<String, Object> result = new HashMap<>();
+		result.put("count", count);
+		
+		return objMapper.writeValueAsString(result);
+	}
+	
+	@DeleteMapping("/api/member/{id}")
+	public String delete(@PathVariable String id) throws JsonProcessingException {
+		int count = service.delete(id);
+		Map<String, Object> result = new HashMap<>();
+		result.put("count", count);
+		ResponseEntity.noContent().build();
+		return objMapper.writeValueAsString(result);
+	}
 	
 }
